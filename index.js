@@ -88,9 +88,35 @@ function Airplane(name) {
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
+ function Car(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
   }
+
+  Car.prototype.fill = function(gallons){
+    this.tank += gallons;
+  }
+
+  Car.prototype.drive = function(distance){
+    if(this.tank > 0 && this.tank - (distance / this.milesPerGallon) > 0){
+    this.odometer += distance;
+    this.tank = this.tank - (distance / this.milesPerGallon);
+    }
+    else{
+      // this.odometer += this.milesPerGallon * this.tank
+      return `I ran out of fuel at ${this.milesPerGallon * this.tank} miles!`;
+    }
+  }
+
+  const toyota = new Car('Camry', 40);
+
+  toyota.fill(1);
+  console.log(toyota.drive(50));
+  console.log(toyota.odometer);
+  console.log(toyota.tank);
+  // console.log(toyota.drive(50));
   
   
   /*
@@ -100,18 +126,32 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(name, age, favoriteToy) {
+   Person.call(this, name, age);
+   this.name = name;
+   this.age = age;
+   this.favoriteToy = favoriteToy;
   }
+
+  Baby.prototype = Object.create(Person.prototype);
+  Baby.prototype.play = function(){
+    return `Playing with ${this.favoriteToy}`;
+  }
+
+  const Evelyn = new Baby('Evelyn', 2, 'dolls');
+
+  console.log(Evelyn);
+  console.log(Evelyn.play());
+
  
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. If not specified, 'this' will be the entire window. Since we didn't give it any context to know what 'this' it will just show us everything.
+    2. Implicit binding is when 'this' refers to the object that is to the left of the . that is calling a function. (object.function() --> 'this' refers to object)
+    3. New binding is creating a new object from the constructor function where 'this' refers to the new object that is being created.
+    4. Explicit binding is where 'this' is explicitly defined using .call(), .apply(), or .bind().
   */
   
   
