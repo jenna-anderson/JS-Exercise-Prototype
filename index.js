@@ -105,8 +105,10 @@ function Airplane(name) {
     this.tank = this.tank - (distance / this.milesPerGallon);
     }
     else{
-      // this.odometer += this.milesPerGallon * this.tank
-      return `I ran out of fuel at ${this.milesPerGallon * this.tank} miles!`;
+      const tank = this.tank;
+      this.odometer += this.milesPerGallon * this.tank
+      this.tank = 0;
+      return `I ran out of fuel at ${this.milesPerGallon * tank} miles!`;
     }
   }
 
@@ -116,7 +118,6 @@ function Airplane(name) {
   console.log(toyota.drive(50));
   console.log(toyota.odometer);
   console.log(toyota.tank);
-  // console.log(toyota.drive(50));
   
   
   /*
